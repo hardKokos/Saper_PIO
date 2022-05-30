@@ -34,8 +34,9 @@ class Cell:
         else:
             self.showCell()
 
+    # start here
     def showCell(self):
-        pass
+        print(self.cells)
 
     def showMine(self):
         # configure zmiena zawartosc
