@@ -2,7 +2,6 @@ from tkinter import Button
 import random
 import constants
 
-
 class Cell:
     cells = []
     # konstruktor
@@ -15,13 +14,14 @@ class Cell:
         self.y = y
         Cell.cells.append(self)
 
-
     # metoda pozwalajaca tworzyc przyciski w wyznaczonym miescu (location)
-    def createButtonObject(self, location):
+    def createButtonObject(self, location, pixel):
         button = Button(
             location,
-            width=2,
-            height=2
+            width=constants.CELL_WIDTH,
+            height=constants.CELL_HEIGHT,
+            image=pixel,
+            bd=2
         )
         # bind - wyswietl po press <Button-1> lewy <Button-3> prawy
         button.bind('<Button-1>', self.leftClickAction)
@@ -40,7 +40,7 @@ class Cell:
 
     def showMine(self):
         # configure zmiena zawartosc
-        self.cellButtonObject.configure(bg='red')
+        self.cellButtonObject.configure(bg='red') #jak dodac pnga?
 
     def rightClickAction(self, event):
         print(event)
