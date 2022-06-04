@@ -38,7 +38,7 @@ class Map:
 
         flagFrame = Frame(
             topFrame,
-            bg='green',
+            bg='gray',
             width=leftCells * constants.CELL_WIDTH,
             height=constants.TOP_FRAME
         )
@@ -46,20 +46,18 @@ class Map:
 
         timerFrame = Frame(
             topFrame,
-            bg='green',
+            bg='gray',
             width=leftCells * constants.CELL_WIDTH,
             height=constants.TOP_FRAME
         )
         timerFrame.place(x=constants.WIDTH - leftCells * constants.CELL_WIDTH, y=0)
     else:
-        topFrameResetButton.place(
-            x=(constants.WIDTH // 2) - constants.MARGIN_BETWEEN_BUTTONS - constants.CELL_WIDTH // 2, y=3
-        )
+        topFrameResetButton.place(x=(constants.WIDTH // 2) - constants.MARGIN_BETWEEN_BUTTONS - constants.CELL_WIDTH // 2, y=3)
 
         notMiddleCells = (constants.GRID_SIZE - 2) // 2
         flagFrame = Frame(
             topFrame,
-            bg='green',
+            bg='gray',
             width=constants.CELL_WIDTH * notMiddleCells,
             height=constants.TOP_FRAME
         )
@@ -67,7 +65,7 @@ class Map:
 
         timerFrame = Frame(
             topFrame,
-            bg='green',
+            bg='gray',
             width=constants.CELL_WIDTH * notMiddleCells,
             height=constants.TOP_FRAME
         )

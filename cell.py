@@ -1,4 +1,3 @@
-import os
 from tkinter import Button
 import random
 import constants
