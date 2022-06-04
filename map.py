@@ -2,24 +2,16 @@ import tkinter
 from tkinter import *
 from cell import Cell
 import constants
-import tools
 from resetButton import Reset
 
 
 class Map:
-    # stworzenie okna
     window = Tk()
-
-    # ustawienie koloru tla
     window.configure(bg="gray")
-    # wymiary mapy
     window.geometry(f'{constants.WIDTH}x'f'{constants.HEIGHT}')
-    # tytul mapy
     window.title("Saper")
-    # zabrania powiekszac mape
-    window.resizable(False,False)
+    window.resizable(False, False)
 
-    # Fragment gdzie znajdzie sie licznik czasu, ilosc flag itd...
     topFrame = Frame(
         window,
         bg='#696969',
@@ -30,14 +22,10 @@ class Map:
 
     gameFrame = Frame(
         window,
-        bg='green', #bez koloru pozniej
         width=constants.WIDTH,
         height=constants.HEIGHT - constants.TOP_FRAME
     )
     gameFrame.place(x=0, y=constants.TOP_FRAME)
-
-    # grid metoda podobna do place tylko dzieli obiekt w ktorym jest
-    # (rodzica) na wiesze i kolumny
 
     topFrameResetButton = Frame(
         topFrame,
@@ -69,5 +57,4 @@ class Map:
 
     Cell.putMines()
 
-    # Uruchom okno
     window.mainloop()

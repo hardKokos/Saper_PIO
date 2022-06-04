@@ -1,5 +1,4 @@
 from tkinter import Button
-import random
 import constants
 
 
@@ -9,13 +8,12 @@ class Reset:
         self.x = x
         self.y = y
 
-    #obramowka dla przycisku
     def createResetObject(self, location, pixel):
         reset = Button(
             location,
             width=constants.CELL_WIDTH,
             height=constants.CELL_WIDTH,
             image=pixel,
-            bd=4,
+            bd=constants.RESET_BUTTON_MARGIN
         )
         self.resetButtonObject = reset
