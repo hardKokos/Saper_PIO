@@ -14,6 +14,7 @@ class Cell:
         self.cellButtonObject = None
         self.x = x
         self.y = y
+        self.is_opened = False
         Cell.cells.append(self)
 
     def createButtonObject(self, location, pixel):
@@ -70,11 +71,13 @@ class Cell:
         return amountOfMines
 
     def showCell(self):
-        Cell.cell_count-=1
+        if not self.is_opened:
+            Cell.cell_count-=1
         print(self.surroundingCells)
         self.cellButtonObject.configure(text=self.surroundingMines)
         if Cell.cell_count_label_obj:
             Cell.cell_count_label_obj.configure(text=f"ilość komórek\n{Cell.cell_count}")
+        self.is_opened = True
 
     def showMine(self):
         self.cellButtonObject.configure(bg='red')
