@@ -18,7 +18,7 @@ class Map:
         width=constants.WIDTH,
         height=constants.TOP_FRAME,
     )
-    topFrame.place(x=0,y=0)
+    topFrame.place(x=0, y=0)
 
     gameFrame = Frame(
         window,
@@ -35,9 +35,43 @@ class Map:
     if constants.GRID_SIZE % 2 != 0:
         leftCells = (constants.GRID_SIZE - 1) / 2
         topFrameResetButton.place(x=constants.WIDTH * (leftCells / constants.GRID_SIZE), y=3)
+
+        flagFrame = Frame(
+            topFrame,
+            bg='green',
+            width=leftCells * constants.CELL_WIDTH,
+            height=constants.TOP_FRAME
+        )
+        flagFrame.place(x=0, y=0)
+
+        timerFrame = Frame(
+            topFrame,
+            bg='green',
+            width=leftCells * constants.CELL_WIDTH,
+            height=constants.TOP_FRAME
+        )
+        timerFrame.place(x=constants.WIDTH - leftCells * constants.CELL_WIDTH, y=0)
     else:
         topFrameResetButton.place(
-            x=(constants.WIDTH // 2) - constants.MARGIN_BETWEEN_BUTTONS - constants.CELL_WIDTH // 2, y=3)
+            x=(constants.WIDTH // 2) - constants.MARGIN_BETWEEN_BUTTONS - constants.CELL_WIDTH // 2, y=3
+        )
+
+        notMiddleCells = (constants.GRID_SIZE - 2) // 2
+        flagFrame = Frame(
+            topFrame,
+            bg='green',
+            width=constants.CELL_WIDTH * notMiddleCells,
+            height=constants.TOP_FRAME
+        )
+        flagFrame.place(x=0, y=0)
+
+        timerFrame = Frame(
+            topFrame,
+            bg='green',
+            width=constants.CELL_WIDTH * notMiddleCells,
+            height=constants.TOP_FRAME
+        )
+        timerFrame.place(x=constants.WIDTH - constants.CELL_WIDTH * notMiddleCells, y=0)
 
     pixel = tkinter.PhotoImage(width=1, height=1)
 
