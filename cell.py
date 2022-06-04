@@ -33,6 +33,9 @@ class Cell:
         if self.isMine:
             self.showMine()
         else:
+            if self.surroundingMines==0:
+                for cell_obj in self.surroundingCells:
+                    cell_obj.showCell()
             self.showCell()
 
     def getCell(self, x, y):
