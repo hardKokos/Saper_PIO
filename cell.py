@@ -5,7 +5,7 @@ import constants
 
 class Cell:
     cells = []
-
+    cell_count = constants.CELL_COUNT
     cell_count_label_obj = None
 
 
@@ -70,8 +70,11 @@ class Cell:
         return amountOfMines
 
     def showCell(self):
+        Cell.cell_count-=1
         print(self.surroundingCells)
         self.cellButtonObject.configure(text=self.surroundingMines)
+        if Cell.cell_count_label_obj:
+            Cell.cell_count_label_obj.configure(text=f"ilość komórek\n{Cell.cell_count}")
 
     def showMine(self):
         self.cellButtonObject.configure(bg='red')
@@ -96,7 +99,7 @@ class Cell:
     def create_cell_count_label(location):
         lbl = Label(
             location,
-            text=f"ilość komórek\n{constants.CELL_COUNT}",
+            text=f"ilość komórek\n{Cell.cell_count}",
             font=("",8)
         )
         Cell.cell_count_label_obj = lbl
