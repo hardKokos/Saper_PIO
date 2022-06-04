@@ -19,7 +19,10 @@ class Cell:
             width=constants.CELL_WIDTH,
             height=constants.CELL_HEIGHT,
             image=pixel,
-            bd=constants.MAP_BUTTON_MARGIN
+            bd=constants.MAP_BUTTON_MARGIN,
+            compound='center',
+            padx=0,
+            pady=0
         )
         # bind - wyswietl po press <Button-1> lewy <Button-3> prawy
         button.bind('<Button-1>', self.leftClickAction)
@@ -32,9 +35,37 @@ class Cell:
         else:
             self.showCell()
 
-    # start here
+    def getCell(self, x, y):
+        for cell in Cell.cells:
+            if cell.x == x and cell.y == y:
+                return cell
+
+    @property
+    def surrounding_cells(self):
+        surroundingCells = [
+            self.getCell(self.x - 1, self.y - 1),
+            self.getCell(self.x - 1, self.y),
+            self.getCell(self.x - 1, self.y + 1),
+            self.getCell(self.x, self.y - 1),
+            self.getCell(self.x + 1, self.y - 1),
+            self.getCell(self.x + 1, self.y),
+            self.getCell(self.x + 1, self.y + 1),
+            self.getCell(self.x, self.y + 1)
+        ]
+        surroundingCells = [cell for cell in surroundingCells if cell is not None]
+        return surroundingCells
+
+    @property
+    def surroundingMines(self):
+        amountOfMines = 0
+        for cell in self.surrounding_cells:
+            if cell.isMine:
+                amountOfMines += 1
+        return amountOfMines
+
     def showCell(self):
-        print(self.cells)
+        print(self.surrounding_cells)
+        self.cellButtonObject.configure(text=self.surrounding_mines)
 
     def showMine(self):
         self.cellButtonObject.configure(bg='red')
