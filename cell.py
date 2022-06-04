@@ -5,8 +5,8 @@ import constants
 
 class Cell:
     cells = []
-    cell_count = constants.CELL_COUNT
-    cell_count_label_obj = None
+    cellCount = constants.CELL_COUNT
+    cellCountLabelObj = None
 
 
     def __init__(self, x, y, isMine=False):
@@ -72,11 +72,11 @@ class Cell:
 
     def showCell(self):
         if not self.is_opened:
-            Cell.cell_count-=1
+            Cell.cellCount-=1
         print(self.surroundingCells)
         self.cellButtonObject.configure(text=self.surroundingMines)
-        if Cell.cell_count_label_obj:
-            Cell.cell_count_label_obj.configure(text=f"ilość komórek\n{Cell.cell_count}")
+        if Cell.cellCountLabelObj:
+            Cell.cellCountLabelObj.configure(text=f"ilość komórek\n{Cell.cellCount}")
         self.is_opened = True
 
     def showMine(self):
@@ -99,10 +99,10 @@ class Cell:
         return f"Cell({self.x}, {self.y})"
 
     @staticmethod
-    def create_cell_count_label(location):
+    def createCellCountLabel(location):
         lbl = Label(
             location,
-            text=f"ilość komórek\n{Cell.cell_count}",
+            text=f"ilość komórek\n{Cell.cellCount}",
             font=("",8)
         )
-        Cell.cell_count_label_obj = lbl
+        Cell.cellCountLabelObj = lbl
