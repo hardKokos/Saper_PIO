@@ -15,6 +15,7 @@ class Cell:
         self.x = x
         self.y = y
         self.is_opened = False
+        self.isMineCandidate = False
         Cell.cells.append(self)
 
     def createButtonObject(self, location, pixel):
@@ -82,8 +83,15 @@ class Cell:
     def showMine(self):
         self.cellButtonObject.configure(bg='red')
 
-    def rightClickAction(event):
-        print(event)
+    def rightClickAction(self, event):
+        if not self.isMineCandidate:
+            self.cellButtonObject.configure(bg='blue')
+            self.isMineCandidate = True
+        else:
+            self.cellButtonObject.configure(bg='SystemButtonFace')
+            self.isMineCandidate = False
+
+
 
     @staticmethod
     def putMines():
