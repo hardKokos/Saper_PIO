@@ -1,6 +1,8 @@
 from tkinter import Button, Label
 import random
 import constants
+import ctypes
+import sys
 
 
 class Cell:
@@ -82,6 +84,8 @@ class Cell:
 
     def showMine(self):
         self.cellButtonObject.configure(bg='red')
+        ctypes.windll.user32.MessageBoxW(0, 'Odkryłeś minę!!!', 'Koniec gry', 0)
+        sys.exit()
 
     def rightClickAction(self, event):
         if not self.isMineCandidate:
