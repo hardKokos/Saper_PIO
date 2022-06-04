@@ -89,4 +89,8 @@ class Map:
 
     Cell.putMines()
 
+    Cell.createCellCountLabel(topFrame)
+    Cell.cellCountLabelObj.place(
+        x=8   , y=8
+    )
     window.mainloop()

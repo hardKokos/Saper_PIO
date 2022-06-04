@@ -1,16 +1,23 @@
-from tkinter import Button
+from tkinter import Button, Label
 import random
 import constants
+import ctypes
+import sys
 
 
 class Cell:
     cells = []
+    cellCount = constants.CELL_COUNT
+    cellCountLabelObj = None
+
 
     def __init__(self, x, y, isMine=False):
         self.isMine = isMine
         self.cellButtonObject = None
         self.x = x
         self.y = y
+        self.is_opened = False
+        self.isMineCandidate = False
         Cell.cells.append(self)
 
     def createButtonObject(self, location, pixel):
@@ -33,6 +40,9 @@ class Cell:
         if self.isMine:
             self.showMine()
         else:
+            if self.surroundingMines==0:
+                for cell_obj in self.surroundingCells:
+                    cell_obj.showCell()
             self.showCell()
 
     def getCell(self, x, y):
@@ -64,14 +74,28 @@ class Cell:
         return amountOfMines
 
     def showCell(self):
+        if not self.is_opened:
+            Cell.cellCount-=1
         print(self.surroundingCells)
         self.cellButtonObject.configure(text=self.surroundingMines)
+        if Cell.cellCountLabelObj:
+            Cell.cellCountLabelObj.configure(text=f"ilość komórek\n{Cell.cellCount}")
+        self.is_opened = True
 
     def showMine(self):
         self.cellButtonObject.configure(bg='red')
+        ctypes.windll.user32.MessageBoxW(0, 'Odkryłeś minę!!!', 'Koniec gry', 0)
+        sys.exit()
 
-    def rightClickAction(event):
-        print(event)
+    def rightClickAction(self, event):
+        if not self.isMineCandidate:
+            self.cellButtonObject.configure(bg='blue')
+            self.isMineCandidate = True
+        else:
+            self.cellButtonObject.configure(bg='SystemButtonFace')
+            self.isMineCandidate = False
+
+
 
     @staticmethod
     def putMines():
@@ -85,3 +109,12 @@ class Cell:
     # wyswietlanie wspolrzenych nie adresow pamieci
     def __repr__(self):
         return f"Cell({self.x}, {self.y})"
+
+    @staticmethod
+    def createCellCountLabel(location):
+        lbl = Label(
+            location,
+            text=f"ilość komórek\n{Cell.cellCount}",
+            font=("",8)
+        )
+        Cell.cellCountLabelObj = lbl
