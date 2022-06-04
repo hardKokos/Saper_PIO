@@ -41,7 +41,7 @@ class Cell:
                 return cell
 
     @property
-    def surrounding_cells(self):
+    def surroundingCells(self):
         surroundingCells = [
             self.getCell(self.x - 1, self.y - 1),
             self.getCell(self.x - 1, self.y),
@@ -58,14 +58,14 @@ class Cell:
     @property
     def surroundingMines(self):
         amountOfMines = 0
-        for cell in self.surrounding_cells:
+        for cell in self.surroundingCells:
             if cell.isMine:
                 amountOfMines += 1
         return amountOfMines
 
     def showCell(self):
-        print(self.surrounding_cells)
-        self.cellButtonObject.configure(text=self.surrounding_mines)
+        print(self.surroundingCells)
+        self.cellButtonObject.configure(text=self.surroundingMines)
 
     def showMine(self):
         self.cellButtonObject.configure(bg='red')
