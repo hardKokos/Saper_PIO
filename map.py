@@ -3,6 +3,7 @@ from tkinter import *
 from cell import Cell
 import constants
 import tools
+from resetButton import Reset
 
 
 class Map:
@@ -30,15 +31,33 @@ class Map:
     gameFrame = Frame(
         window,
         bg='green', #bez koloru pozniej
-        width=constants.WIDTH - (2*tools.width_percentage(4)),
-        height=constants.HEIGHT - tools.height_percentage(15+6+6)
+        width=constants.WIDTH,
+        height=constants.HEIGHT - constants.TOP_FRAME
     )
-    gameFrame.place(x=0,y=50)
+    gameFrame.place(x=0, y=constants.TOP_FRAME)
 
     # grid metoda podobna do place tylko dzieli obiekt w ktorym jest
     # (rodzica) na wiesze i kolumny
 
+    topFrameResetButton = Frame(
+        topFrame,
+        width=constants.WIDTH // constants.GRID_SIZE,
+        height=constants.TOP_FRAME
+    )
+    if constants.GRID_SIZE % 2 != 0:
+        leftCells = (constants.GRID_SIZE - 1) / 2
+        topFrameResetButton.place(x=constants.WIDTH * (leftCells / constants.GRID_SIZE), y=3)
+    else:
+        topFrameResetButton.place(
+            x=(constants.WIDTH // 2) - constants.MARGIN_BETWEEN_BUTTONS - constants.CELL_WIDTH // 2, y=3)
+
     pixel = tkinter.PhotoImage(width=1, height=1)
+
+    reset = Reset(0, 0)
+    reset.createResetObject(topFrameResetButton, pixel)
+    reset.resetButtonObject.grid(
+        column=0, row=0
+    )
 
     for x in range(constants.GRID_SIZE):
         for y in range(constants.GRID_SIZE):
