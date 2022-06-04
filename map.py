@@ -57,4 +57,8 @@ class Map:
 
     Cell.putMines()
 
+    Cell.create_cell_count_label(topFrame)
+    Cell.cell_count_label_obj.place(
+        x=8   , y=8
+    )
     window.mainloop()

@@ -1,10 +1,13 @@
-from tkinter import Button
+from tkinter import Button, Label
 import random
 import constants
 
 
 class Cell:
     cells = []
+
+    cell_count_label_obj = None
+
 
     def __init__(self, x, y, isMine=False):
         self.isMine = isMine
@@ -88,3 +91,12 @@ class Cell:
     # wyswietlanie wspolrzenych nie adresow pamieci
     def __repr__(self):
         return f"Cell({self.x}, {self.y})"
+
+    @staticmethod
+    def create_cell_count_label(location):
+        lbl = Label(
+            location,
+            text=f"ilość komórek\n{constants.CELL_COUNT}",
+            font=("",8)
+        )
+        Cell.cell_count_label_obj = lbl
