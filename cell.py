@@ -37,12 +37,11 @@ class Cell:
         self.cellButtonObject = button
 
     def leftClickAction(self, event):
+        if self.isMineCandidate:
+            return
         if self.isMine:
             self.showMine()
         else:
-            if self.surroundingMines == 0:
-                for cell_obj in self.surroundingCells:
-                    cell_obj.showCell()
             self.showCell()
 
     def getCell(self, x, y):
@@ -74,22 +73,29 @@ class Cell:
         return amountOfMines
 
     def showCell(self):
+        if self.isMine:
+            return
         if not self.is_opened:
             Cell.cellCount -= 1
-        if self.surroundingMines == 0:
+
+        self.is_opened = True
+        surroundMines = self.surroundingMines
+        if surroundMines == 0:
             self.cellButtonObject.configure(bg='gray')
             self.cellButtonObject.configure(state='disabled')
-        if self.surroundingMines != 0:
+            for cell in self.surroundingCells:
+                if not cell.isMine and not cell.is_opened:
+                    cell.showCell()
+        if surroundMines != 0:
             self.cellButtonObject.configure(text=self.surroundingMines)
-        if self.surroundingMines == 1:
+        if surroundMines == 1:
             self.cellButtonObject.configure(fg='blue')
-        if self.surroundingMines == 2:
+        elif surroundMines == 2:
             self.cellButtonObject.configure(fg='green')
-        if self.surroundingMines == 3:
+        elif surroundMines == 3:
             self.cellButtonObject.configure(fg='red')
         if Cell.cellCountLabelObj:
             Cell.cellCountLabelObj.configure(text=f"ilość komórek\n{Cell.cellCount}")
-        self.is_opened = True
 
 
     def showMine(self):
