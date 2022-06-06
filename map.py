@@ -8,7 +8,11 @@ from resetButton import Reset
 class Map:
     window = Tk()
     window.configure(bg="gray")
-    window.geometry(f'{constants.WIDTH}x'f'{constants.HEIGHT}')
+    SCREEN_WIDTH = window.winfo_screenwidth()
+    SCREEN_HEIGHT = window.winfo_screenheight()
+    CENTER_X = int(SCREEN_WIDTH / 2 - constants.WIDTH / 2)
+    CENTER_Y = int(SCREEN_HEIGHT / 2 - constants.HEIGHT / 2)
+    window.geometry(f'{constants.WIDTH}x{constants.HEIGHT}+{CENTER_X}+{CENTER_Y}')
     window.title("Saper")
     window.resizable(False, False)
 
