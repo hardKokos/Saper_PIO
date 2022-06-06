@@ -8,10 +8,14 @@ from resetButton import Reset
 class Map:
     window = Tk()
     window.configure(bg="gray")
-    window.geometry(f'{constants.WIDTH}x'f'{constants.HEIGHT}')
+    SCREEN_WIDTH = window.winfo_screenwidth()
+    SCREEN_HEIGHT = window.winfo_screenheight()
+    CENTER_X = int(SCREEN_WIDTH / 2 - constants.WIDTH / 2)
+    CENTER_Y = int(SCREEN_HEIGHT / 2 - constants.HEIGHT / 2)
+    window.geometry(f'{constants.WIDTH}x{constants.HEIGHT}+{CENTER_X}+{CENTER_Y}')
     window.title("Saper")
     window.resizable(False, False)
-
+    smileDefaultImage = PhotoImage
     topFrame = Frame(
         window,
         bg='#696969',
@@ -72,12 +76,12 @@ class Map:
 
     pixel = tkinter.PhotoImage(width=1, height=1)
 
+    smileDefaultImage = PhotoImage(file='smile_default.png')
     reset = Reset(0, 0)
-    reset.createResetObject(topFrameResetButton, pixel)
+    reset.createResetObject(topFrameResetButton, smileDefaultImage)
     reset.resetButtonObject.grid(
         column=0, row=0
     )
-
     for x in range(constants.GRID_SIZE):
         for y in range(constants.GRID_SIZE):
             cell = Cell(x, y)
