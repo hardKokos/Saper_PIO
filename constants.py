@@ -1,4 +1,4 @@
-GRID_SIZE = 12 #max 24x24, min 8x8
+GRID_SIZE = 22 #max 22x22, min 8x8
 MINES_NUMBER = (GRID_SIZE ** 2) // 4
 CELL_WIDTH = 35
 CELL_HEIGHT = 35
