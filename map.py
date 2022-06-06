@@ -35,7 +35,6 @@ class Map:
     if constants.GRID_SIZE % 2 != 0:
         leftCells = (constants.GRID_SIZE - 1) / 2
         topFrameResetButton.place(x=constants.WIDTH * (leftCells / constants.GRID_SIZE), y=3)
-
         flagFrame = Frame(
             topFrame,
             bg='gray',
@@ -94,3 +93,5 @@ class Map:
         x=8   , y=8
     )
     window.mainloop()
+
+
