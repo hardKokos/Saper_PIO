@@ -1,16 +1,16 @@
-from tkinter import Button, Label
+from tkinter import Button, Label, messagebox
+from tkinter import *
 import random
 import constants
-import ctypes
 import sys
-
 
 class Cell:
     cells = []
     cellCount = constants.CELL_COUNT
     cellCountLabelObj = None
-
-
+    bombImage = PhotoImage
+    flagImage = PhotoImage
+    pixel = PhotoImage
     def __init__(self, x, y, isMine=False):
         self.isMine = isMine
         self.cellButtonObject = None
@@ -40,7 +40,7 @@ class Cell:
         if self.isMine:
             self.showMine()
         else:
-            if self.surroundingMines==0:
+            if self.surroundingMines == 0:
                 for cell_obj in self.surroundingCells:
                     cell_obj.showCell()
             self.showCell()
@@ -75,26 +75,43 @@ class Cell:
 
     def showCell(self):
         if not self.is_opened:
-            Cell.cellCount-=1
-        print(self.surroundingCells)
-        self.cellButtonObject.configure(text=self.surroundingMines)
+            Cell.cellCount -= 1
+        if self.surroundingMines == 0:
+            self.cellButtonObject.configure(bg='gray')
+            self.cellButtonObject.configure(state='disabled')
+        if self.surroundingMines != 0:
+            self.cellButtonObject.configure(text=self.surroundingMines)
+        if self.surroundingMines == 1:
+            self.cellButtonObject.configure(fg='blue')
+        if self.surroundingMines == 2:
+            self.cellButtonObject.configure(fg='green')
+        if self.surroundingMines == 3:
+            self.cellButtonObject.configure(fg='red')
         if Cell.cellCountLabelObj:
             Cell.cellCountLabelObj.configure(text=f"ilość komórek\n{Cell.cellCount}")
         self.is_opened = True
 
+
     def showMine(self):
-        self.cellButtonObject.configure(bg='red')
-        ctypes.windll.user32.MessageBoxW(0, 'Odkryłeś minę!!!', 'Koniec gry', 0)
+        self.bombImage = PhotoImage(file='mine.png')
+
+        self.cellButtonObject.configure(image = self.bombImage)
+
+        for c in self.cells:
+            if c.isMine:
+                c.cellButtonObject.configure(image = self.bombImage)
+        messagebox.showinfo("Przegrana", "Przegrana!")
         sys.exit()
 
     def rightClickAction(self, event):
+        self.flagImage=PhotoImage(file='kozacka_flaga.png')
         if not self.isMineCandidate:
-            self.cellButtonObject.configure(bg='blue')
+            self.cellButtonObject.configure(image = self.flagImage)
             self.isMineCandidate = True
         else:
-            self.cellButtonObject.configure(bg='SystemButtonFace')
+            self.pixel=PhotoImage(width=1, height=1)
+            self.cellButtonObject.configure(image=self.pixel)
             self.isMineCandidate = False
-
 
 
     @staticmethod
@@ -115,6 +132,6 @@ class Cell:
         lbl = Label(
             location,
             text=f"ilość komórek\n{Cell.cellCount}",
-            font=("",8)
+            font=("", 8)
         )
         Cell.cellCountLabelObj = lbl
