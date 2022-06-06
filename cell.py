@@ -10,7 +10,6 @@ class Cell:
     cellCountLabelObj = None
     bombImage = PhotoImage
     flagImage = PhotoImage
-    pixel = PhotoImage
     def __init__(self, x, y, isMine=False):
         self.isMine = isMine
         self.cellButtonObject = None
