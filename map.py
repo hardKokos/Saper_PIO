@@ -15,7 +15,7 @@ class Map:
     window.geometry(f'{constants.WIDTH}x{constants.HEIGHT}+{CENTER_X}+{CENTER_Y}')
     window.title("Saper")
     window.resizable(False, False)
-
+    smileDefaultImage = PhotoImage
     topFrame = Frame(
         window,
         bg='#696969',
@@ -76,12 +76,12 @@ class Map:
 
     pixel = tkinter.PhotoImage(width=1, height=1)
 
+    smileDefaultImage = PhotoImage(file='smile_default.png')
     reset = Reset(0, 0)
-    reset.createResetObject(topFrameResetButton, pixel)
+    reset.createResetObject(topFrameResetButton, smileDefaultImage)
     reset.resetButtonObject.grid(
         column=0, row=0
     )
-
     for x in range(constants.GRID_SIZE):
         for y in range(constants.GRID_SIZE):
             cell = Cell(x, y)
