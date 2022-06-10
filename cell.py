@@ -1,15 +1,18 @@
-from tkinter import Button, Label, messagebox
+from tkinter import messagebox
 from tkinter import *
 import random
 import constants
+import userInput
 import sys
+
 
 class Cell:
     cells = []
-    cellCount = constants.CELL_COUNT
+    cellCount = userInput.GRID_SIZE ** 2 #NAPRAWIC CELL COUNT
     cellCountLabelObj = None
     bombImage = PhotoImage
     flagImage = PhotoImage
+
     def __init__(self, x, y, isMine=False):
         self.isMine = isMine
         self.cellButtonObject = None
@@ -96,34 +99,32 @@ class Cell:
         if Cell.cellCountLabelObj:
             Cell.cellCountLabelObj.configure(text=f"ilość komórek\n{Cell.cellCount}")
 
-
     def showMine(self):
         self.bombImage = PhotoImage(file='mine.png')
 
-        self.cellButtonObject.configure(image = self.bombImage)
+        self.cellButtonObject.configure(image=self.bombImage)
 
         for c in self.cells:
             if c.isMine:
-                c.cellButtonObject.configure(image = self.bombImage)
+                c.cellButtonObject.configure(image=self.bombImage)
         messagebox.showinfo("Przegrana", "Przegrana!")
         sys.exit()
 
     def rightClickAction(self, event):
-        self.flagImage=PhotoImage(file='kozacka_flaga.png')
+        self.flagImage = PhotoImage(file='kozacka_flaga.png')
         if not self.isMineCandidate:
-            self.cellButtonObject.configure(image = self.flagImage)
+            self.cellButtonObject.configure(image=self.flagImage)
             self.isMineCandidate = True
         else:
-            self.pixel=PhotoImage(width=1, height=1)
+            self.pixel = PhotoImage(width=1, height=1)
             self.cellButtonObject.configure(image=self.pixel)
             self.isMineCandidate = False
-
 
     @staticmethod
     def putMines():
         pickedCells = random.sample(
             Cell.cells,
-            constants.MINES_NUMBER
+            userInput.MINES_NUMBER
         )
         for pickedCells in pickedCells:
             pickedCells.isMine = True
