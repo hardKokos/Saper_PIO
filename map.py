@@ -1,6 +1,7 @@
 import tkinter
 from tkinter import *
 import constants
+import tools
 import userInput
 from cell import Cell
 from resetButton import Reset
@@ -15,47 +16,20 @@ class Map:
     settings.title("Ustawienia")
     settings.resizable(False, False)
     settings.geometry("400x200")
-    btn = Button(
-        settings,
-        text="Zatwierdź",
-        width=15,
-        bd=2,
-        command=settings.quit
-    )
+
+    btn = Button(settings, text="Zatwierdź", width=15, bd=2, command=settings.quit)
     btn.place(relx=0.5, rely=0.6, anchor=CENTER)
 
-    mapSize = Entry(
-        settings,
-        width=25,
-        bd=3
-    )
+    mapSize = Entry(settings, width=25, bd=3)
     mapSize.place(relx=0.5, rely=0.4, anchor=CENTER)
 
-    minesNumber = Entry(
-        settings,
-        width=25,
-        bd=3
-    )
+    minesNumber = Entry(settings, width=25, bd=3)
     minesNumber.place(relx=0.5, rely=0.2, anchor=CENTER)
 
-    mapLabel = Label(
-        settings,
-        height=1,
-        width=30,
-        bd=0,
-        bg='gray',
-        text="Podaj rozmiar mapy (min 8, max 22)"
-    )
+    mapLabel = Label(settings, height=1, width=30, bd=0, bg='gray', text="Podaj rozmiar mapy (min 8, max 22)")
     mapLabel.place(relx=0.5, rely=0.3, anchor=CENTER)
 
-    minesLabel = Label(
-        settings,
-        height=1,
-        width=25,
-        bd=0,
-        bg='gray',
-        text="Podaj ilosc min"
-    )
+    minesLabel = Label(settings, height=1, width=25, bd=0, bg='gray', text="Podaj ilosc min")
     minesLabel.place(relx=0.5, rely=0.1, anchor=CENTER)
 
     settings.mainloop()
@@ -74,63 +48,27 @@ class Map:
     window.title("Saper")
     window.resizable(False, False)
     smileDefaultImage = PhotoImage
-    topFrame = Frame(
-        window,
-        bg='#696969',
-        width=constants.WIDTH * userInput.GRID_SIZE,
-        height=TOP_FRAME,
-    )
+
+    topFrame = Frame(window, bg='#696969', width=constants.WIDTH * userInput.GRID_SIZE, height=TOP_FRAME)
     topFrame.place(relx=0, rely=0)
 
-    gameFrame = Frame(
-        window,
-        width=constants.WIDTH * userInput.GRID_SIZE,
-        height=(constants.HEIGHT * userInput.GRID_SIZE) - TOP_FRAME
-    )
+    gameFrame = Frame(window, width=constants.WIDTH * userInput.GRID_SIZE, height=(constants.HEIGHT * userInput.GRID_SIZE) - TOP_FRAME)
     gameFrame.place(x=0, y=TOP_FRAME)
 
-    topFrameResetButton = Frame(
-        topFrame,
-        width=constants.WIDTH * userInput.GRID_SIZE // userInput.GRID_SIZE,
-        height=TOP_FRAME
-    )
+    topFrameResetButton = Frame(topFrame, width=constants.WIDTH * userInput.GRID_SIZE // userInput.GRID_SIZE, height=TOP_FRAME)
+
     if userInput.GRID_SIZE % 2 != 0:
         leftCells = (userInput.GRID_SIZE - 1) / 2
         topFrameResetButton.place(x=(constants.WIDTH * userInput.GRID_SIZE) * (leftCells / userInput.GRID_SIZE), y=3)
-        flagFrame = Frame(
-            topFrame,
-            bg='gray',
-            width=leftCells * constants.CELL_WIDTH,
-            height=TOP_FRAME
-        )
-        flagFrame.place(x=0, y=0)
-
-        timerFrame = Frame(
-            topFrame,
-            bg='gray',
-            width=leftCells * constants.CELL_WIDTH,
-            height=TOP_FRAME
-        )
-        timerFrame.place(x=(constants.WIDTH * userInput.GRID_SIZE) - leftCells * constants.CELL_WIDTH, y=0)
+        flagFrame = tools.putFrame(0, 0, topFrame, leftCells * constants.CELL_SIZE, TOP_FRAME)
+        timerFrame = tools.putFrame((constants.WIDTH * userInput.GRID_SIZE) - leftCells * constants.CELL_SIZE, 0,
+                                    topFrame, leftCells * constants.CELL_SIZE, TOP_FRAME)
     else:
-        topFrameResetButton.place(x=((constants.WIDTH * userInput.GRID_SIZE) // 2) - constants.MARGIN_BETWEEN_BUTTONS - constants.CELL_WIDTH // 2, y=3)
-
         notMiddleCells = (userInput.GRID_SIZE - 2) // 2
-        flagFrame = Frame(
-            topFrame,
-            bg='gray',
-            width=constants.CELL_WIDTH * notMiddleCells,
-            height=TOP_FRAME
-        )
-        flagFrame.place(x=0, y=0)
-
-        timerFrame = Frame(
-            topFrame,
-            bg='gray',
-            width=constants.CELL_WIDTH * notMiddleCells,
-            height=TOP_FRAME
-        )
-        timerFrame.place(x=(constants.WIDTH * userInput.GRID_SIZE) - constants.CELL_WIDTH * notMiddleCells, y=0)
+        topFrameResetButton.place(x=((constants.WIDTH * userInput.GRID_SIZE) // 2) - constants.MARGIN_BETWEEN_BUTTONS - constants.CELL_SIZE // 2, y=3)
+        flagFrame = tools.putFrame(0, 0, topFrame, constants.CELL_SIZE * notMiddleCells, TOP_FRAME)
+        timerFrame = tools.putFrame((constants.WIDTH * userInput.GRID_SIZE) - constants.CELL_SIZE * notMiddleCells, 0,
+                                    topFrame, constants.CELL_SIZE * notMiddleCells, TOP_FRAME)
 
     pixel = tkinter.PhotoImage(width=1, height=1)
 

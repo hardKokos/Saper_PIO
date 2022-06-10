@@ -14,8 +14,8 @@ class Reset:
 
         reset = Button(
             location,
-            width=constants.CELL_WIDTH,
-            height=constants.CELL_WIDTH,
+            width=constants.CELL_SIZE,
+            height=constants.CELL_SIZE,
             image=pixel,
             bd=constants.RESET_BUTTON_MARGIN
         )

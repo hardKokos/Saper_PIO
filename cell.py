@@ -25,8 +25,8 @@ class Cell:
     def createButtonObject(self, location, pixel):
         button = Button(
             location,
-            width=constants.CELL_WIDTH,
-            height=constants.CELL_HEIGHT,
+            width=constants.CELL_SIZE,
+            height=constants.CELL_SIZE,
             image=pixel,
             bd=constants.MAP_BUTTON_MARGIN,
             compound='center',
