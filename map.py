@@ -75,24 +75,16 @@ class Map:
     smileDefaultImage = PhotoImage(file='smile_default.png')
     reset = Reset(0, 0)
     reset.createResetObject(topFrameResetButton, smileDefaultImage)
-    reset.resetButtonObject.grid(
-        column=0, row=0
-    )
+    reset.resetButtonObject.grid(column=0, row=0)
 
     for x in range(userInput.GRID_SIZE):
         for y in range(userInput.GRID_SIZE):
             cell = Cell(x, y)
             cell.createButtonObject(gameFrame, pixel)
-            cell.cellButtonObject.grid(
-                column=x, row=y
-            )
+            cell.cellButtonObject.grid(column=x, row=y)
 
     Cell.putMines()
-    print(userInput.GRID_SIZE)
-    print(userInput.MINES_NUMBER)
 
     Cell.createCellCountLabel(timerFrame)
-    Cell.cellCountLabelObj.place(
-        x=8, y=8
-    )
+    Cell.cellCountLabelObj.place(x=8, y=8)
     window.mainloop()
