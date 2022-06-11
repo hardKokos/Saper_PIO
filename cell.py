@@ -8,19 +8,25 @@ import sys
 
 class Cell:
     cells = []
-    cellCount = userInput.GRID_SIZE ** 2 #NAPRAWIC CELL COUNT
+    cellCount = 0
+    mineCount = 0
+    flagCount = 0
+    correctlyGuessedCount = 0
     cellCountLabelObj = None
     bombImage = PhotoImage
     flagImage = PhotoImage
 
-    def __init__(self, x, y, isMine=False):
+    def __init__(self, x, y, bombCount, cellCount, isMine=False, flagCount=0, ):
         self.isMine = isMine
         self.cellButtonObject = None
+        Cell.cells.append(self)
         self.x = x
         self.y = y
         self.is_opened = False
-        self.isMineCandidate = False
-        Cell.cells.append(self)
+        self.isFlagged = False
+        self.mineCount = bombCount
+        self.flagCount = flagCount
+        self.cellCount = cellCount
 
     def createButtonObject(self, location, pixel):
         button = Button(
@@ -39,12 +45,13 @@ class Cell:
         self.cellButtonObject = button
 
     def leftClickAction(self, event):
-        if self.isMineCandidate:
+        if self.isFlagged:
             return
         if self.isMine:
             self.showMine()
         else:
             self.showCell()
+        self.checkIfWon()
 
     def getCell(self, x, y):
         for cell in Cell.cells:
@@ -79,7 +86,6 @@ class Cell:
             return
         if not self.is_opened:
             Cell.cellCount -= 1
-
         self.is_opened = True
         surroundMines = self.surroundingMines
         if surroundMines == 0:
@@ -96,14 +102,12 @@ class Cell:
             self.cellButtonObject.configure(fg='green')
         elif surroundMines == 3:
             self.cellButtonObject.configure(fg='red')
-        if Cell.cellCountLabelObj:
-            Cell.cellCountLabelObj.configure(text=f"ilość komórek\n{Cell.cellCount}")
+        self.cellButtonObject.unbind('<Button-1>')
+        self.cellButtonObject.unbind('<Button-3>')
 
     def showMine(self):
         self.bombImage = PhotoImage(file='mine.png')
-
         self.cellButtonObject.configure(image=self.bombImage)
-
         for c in self.cells:
             if c.isMine:
                 c.cellButtonObject.configure(image=self.bombImage)
@@ -112,13 +116,31 @@ class Cell:
 
     def rightClickAction(self, event):
         self.flagImage = PhotoImage(file='kozacka_flaga.png')
-        if not self.isMineCandidate:
+        if not self.isFlagged:
             self.cellButtonObject.configure(image=self.flagImage)
-            self.isMineCandidate = True
+            self.isFlagged = True
+            Cell.flagCount += 1
+            if self.isMine:
+                Cell.correctlyGuessedCount += 1
         else:
             self.pixel = PhotoImage(width=1, height=1)
             self.cellButtonObject.configure(image=self.pixel)
-            self.isMineCandidate = False
+            self.isFlagged = False
+            Cell.flagCount -= 1
+
+        self.checkIfWon()
+
+    def checkIfWon(self):
+        cellCountState = self.cellCount + Cell.cellCount
+        mineCountState = self.mineCount + Cell.mineCount
+        flagCountState = Cell.flagCount
+        correctGuessState = Cell.correctlyGuessedCount
+        print("CELL:" + str(cellCountState))
+        print("MINE:"+str(mineCountState))
+        print("FLAG:"+str(flagCountState))
+        print("CORRECT:"+str(correctGuessState))
+        if cellCountState == mineCountState and correctGuessState==mineCountState and correctGuessState == flagCountState:
+            messagebox.showinfo("Wygrana", "Wygrana!")
 
     @staticmethod
     def putMines():
@@ -134,10 +156,10 @@ class Cell:
         return f"Cell({self.x}, {self.y})"
 
     @staticmethod
-    def createCellCountLabel(location):
+    def createCellCountLabel(location, minesNumber):
         lbl = Label(
             location,
-            text=f"ilość komórek\n{Cell.cellCount}",
+            text=f"Ilość flag\n{minesNumber}",
             font=("", 8)
         )
         Cell.cellCountLabelObj = lbl
