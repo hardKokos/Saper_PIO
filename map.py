@@ -44,7 +44,8 @@ class Map:
     SCREEN_HEIGHT = window.winfo_screenheight()
     CENTER_X = int(SCREEN_WIDTH / 2 - (constants.WIDTH * userInput.GRID_SIZE) / 2)
     CENTER_Y = int(SCREEN_HEIGHT / 2 - (constants.HEIGHT * userInput.GRID_SIZE) / 2)
-    window.geometry(f'{constants.WIDTH * userInput.GRID_SIZE}x{constants.HEIGHT * userInput.GRID_SIZE + TOP_FRAME}+{CENTER_X}+{CENTER_Y}')
+    window.geometry(
+        f'{constants.WIDTH * userInput.GRID_SIZE}x{constants.HEIGHT * userInput.GRID_SIZE + TOP_FRAME}+{CENTER_X}+{CENTER_Y}')
     window.title("Saper")
     window.resizable(False, False)
     smileDefaultImage = PhotoImage
@@ -52,10 +53,12 @@ class Map:
     topFrame = Frame(window, bg='#696969', width=constants.WIDTH * userInput.GRID_SIZE, height=TOP_FRAME)
     topFrame.place(relx=0, rely=0)
 
-    gameFrame = Frame(window, width=constants.WIDTH * userInput.GRID_SIZE, height=(constants.HEIGHT * userInput.GRID_SIZE) - TOP_FRAME)
+    gameFrame = Frame(window, width=constants.WIDTH * userInput.GRID_SIZE,
+                      height=(constants.HEIGHT * userInput.GRID_SIZE) - TOP_FRAME)
     gameFrame.place(x=0, y=TOP_FRAME)
 
-    topFrameResetButton = Frame(topFrame, width=constants.WIDTH * userInput.GRID_SIZE // userInput.GRID_SIZE, height=TOP_FRAME)
+    topFrameResetButton = Frame(topFrame, width=constants.WIDTH * userInput.GRID_SIZE // userInput.GRID_SIZE,
+                                height=TOP_FRAME)
 
     if userInput.GRID_SIZE % 2 != 0:
         leftCells = (userInput.GRID_SIZE - 1) / 2
@@ -65,7 +68,9 @@ class Map:
                                     topFrame, leftCells * constants.CELL_SIZE, TOP_FRAME)
     else:
         notMiddleCells = (userInput.GRID_SIZE - 2) // 2
-        topFrameResetButton.place(x=((constants.WIDTH * userInput.GRID_SIZE) // 2) - constants.MARGIN_BETWEEN_BUTTONS - constants.CELL_SIZE // 2, y=3)
+        topFrameResetButton.place(x=((
+                                             constants.WIDTH * userInput.GRID_SIZE) // 2) - constants.MARGIN_BETWEEN_BUTTONS - constants.CELL_SIZE // 2,
+                                  y=3)
         flagFrame = tools.putFrame(0, 0, topFrame, constants.CELL_SIZE * notMiddleCells, TOP_FRAME)
         timerFrame = tools.putFrame((constants.WIDTH * userInput.GRID_SIZE) - constants.CELL_SIZE * notMiddleCells, 0,
                                     topFrame, constants.CELL_SIZE * notMiddleCells, TOP_FRAME)
@@ -79,12 +84,11 @@ class Map:
 
     for x in range(userInput.GRID_SIZE):
         for y in range(userInput.GRID_SIZE):
-            cell = Cell(x, y)
+            cell = Cell(x, y, userInput.MINES_NUMBER, userInput.GRID_SIZE**2)
             cell.createButtonObject(gameFrame, pixel)
             cell.cellButtonObject.grid(column=x, row=y)
 
     Cell.putMines()
-
-    Cell.createCellCountLabel(timerFrame)
+    Cell.createCellCountLabel(timerFrame,  userInput.MINES_NUMBER)
     Cell.cellCountLabelObj.place(x=8, y=8)
     window.mainloop()
