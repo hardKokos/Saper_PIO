@@ -39,7 +39,6 @@ class Cell:
             padx=0,
             pady=0
         )
-        # bind - wyswietl po press <Button-1> lewy <Button-3> prawy
         button.bind('<Button-1>', self.leftClickAction)
         button.bind('<Button-3>', self.rightClickAction)
         self.cellButtonObject = button
@@ -91,7 +90,13 @@ class Cell:
         if surroundMines == 0:
             self.cellButtonObject.configure(bg='gray')
             self.cellButtonObject.configure(state='disabled')
+            self.pixel = PhotoImage(width=1, height=1)
+            self.cellButtonObject.configure(image=self.pixel)
             for cell in self.surroundingCells:
+                if cell.isFlagged:
+                    Cell.flagCount -= 1
+                    cell.isFlagged = False
+
                 if not cell.isMine and not cell.is_opened:
                     cell.showCell()
         if surroundMines != 0:
@@ -127,6 +132,8 @@ class Cell:
             self.cellButtonObject.configure(image=self.pixel)
             self.isFlagged = False
             Cell.flagCount -= 1
+            if self.isMine:
+                Cell.correctlyGuessedCount -= 1
 
         self.checkIfWon()
 
@@ -136,10 +143,10 @@ class Cell:
         flagCountState = Cell.flagCount
         correctGuessState = Cell.correctlyGuessedCount
         print("CELL:" + str(cellCountState))
-        print("MINE:"+str(mineCountState))
-        print("FLAG:"+str(flagCountState))
-        print("CORRECT:"+str(correctGuessState))
-        if cellCountState == mineCountState and correctGuessState==mineCountState and correctGuessState == flagCountState:
+        print("MINE:" + str(mineCountState))
+        print("FLAG:" + str(flagCountState))
+        print("CORRECT:" + str(correctGuessState))
+        if cellCountState == mineCountState and correctGuessState == mineCountState and correctGuessState == flagCountState:
             messagebox.showinfo("Wygrana", "Wygrana!")
 
     @staticmethod
