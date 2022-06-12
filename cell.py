@@ -8,6 +8,7 @@ import sys
 
 class Cell:
     cells = []
+    cellTimer = None
     cellCount = 0
     mineCount = 0
     flagCount = 0
@@ -117,6 +118,7 @@ class Cell:
             if c.isMine:
                 c.cellButtonObject.configure(image=self.bombImage)
         messagebox.showinfo("Przegrana", "Przegrana!")
+        self.cellTimer.stopTimer()
         sys.exit()
 
     def rightClickAction(self, event):
@@ -147,6 +149,7 @@ class Cell:
         print("FLAG:" + str(flagCountState))
         print("CORRECT:" + str(correctGuessState))
         if cellCountState == mineCountState and correctGuessState == mineCountState and correctGuessState == flagCountState:
+            self.cellTimer.stopTimer()
             messagebox.showinfo("Wygrana", "Wygrana!")
 
     @staticmethod
@@ -170,3 +173,7 @@ class Cell:
             font=("", 8)
         )
         Cell.cellCountLabelObj = lbl
+
+    @staticmethod
+    def setTimer(timer):
+        Cell.cellTimer = timer

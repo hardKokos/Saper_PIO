@@ -5,6 +5,7 @@ import tools
 import userInput
 from cell import Cell
 from resetButton import Reset
+from timer import Timer
 
 TOP_FRAME = 50
 global CELLS
@@ -89,6 +90,11 @@ class Map:
             cell.cellButtonObject.grid(column=x, row=y)
 
     Cell.putMines()
-    Cell.createCellCountLabel(timerFrame,  userInput.MINES_NUMBER)
+    Cell.createCellCountLabel(flagFrame, userInput.MINES_NUMBER)
     Cell.cellCountLabelObj.place(x=8, y=8)
+
+    timer = Timer(timerFrame, window)
+    Cell.setTimer(timer)
+    timer.startTimer()
+
     window.mainloop()
