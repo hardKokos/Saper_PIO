@@ -16,6 +16,7 @@ class Cell:
     cellCountLabelObj = None
     bombImage = PhotoImage
     flagImage = PhotoImage
+    leftClicks = 0
 
     def __init__(self, x, y, bombCount, cellCount, isMine=False, flagCount=0, ):
         self.isMine = isMine
@@ -47,6 +48,8 @@ class Cell:
     def leftClickAction(self, event):
         if self.isFlagged:
             return
+
+        Cell.leftClicks = Cell.leftClicks + 1
         if self.isMine:
             self.showMine()
         else:
@@ -154,7 +157,7 @@ class Cell:
         #print("CORRECT:" + str(correctGuessState))
         if cellCountState == mineCountState and correctGuessState == mineCountState and correctGuessState == flagCountState:
             self.cellTimer.stopTimer()
-            messagebox.showinfo("Wygrana", "Wygrana!")
+            messagebox.showinfo("Wygrana", f"Wygrana!\nIlosc klikniec:{Cell.leftClicks}")
             sys.exit()
 
     @staticmethod
