@@ -145,13 +145,14 @@ class Cell:
         mineCountState = self.mineCount + Cell.mineCount
         flagCountState = Cell.flagCount
         correctGuessState = Cell.correctlyGuessedCount
-        print("CELL:" + str(cellCountState))
-        print("MINE:" + str(mineCountState))
-        print("FLAG:" + str(flagCountState))
-        print("CORRECT:" + str(correctGuessState))
+        #print("CELL:" + str(cellCountState))
+        #print("MINE:" + str(mineCountState))
+        #print("FLAG:" + str(flagCountState))
+        #print("CORRECT:" + str(correctGuessState))
         if cellCountState == mineCountState and correctGuessState == mineCountState and correctGuessState == flagCountState:
             self.cellTimer.stopTimer()
             messagebox.showinfo("Wygrana", "Wygrana!")
+            sys.exit()
 
     @staticmethod
     def putMines():

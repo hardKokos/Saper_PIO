@@ -19,7 +19,7 @@ class Timer:
         lbl = Label(
             location,
             textvariable=self.timerText,
-            font=("", 14),
+            font=("", 12),
             bg='gray',
             fg='red',
             anchor="center"
