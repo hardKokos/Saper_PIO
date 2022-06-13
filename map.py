@@ -130,6 +130,6 @@ class Map:
         try:
             self.window.destroy()
         except:
-            print('Kaput')
+            pass
         os.system('python main.py')
         sys.exit()

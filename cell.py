@@ -130,6 +130,7 @@ class Cell:
             Cell.flagCount += 1
             if self.isMine:
                 Cell.correctlyGuessedCount += 1
+            Cell.cellCountLabelObj.configure(text=f'Ilość flag\n{str(self.mineCount + Cell.mineCount-Cell.flagCount)}')
         else:
             self.pixel = PhotoImage(width=1, height=1)
             self.cellButtonObject.configure(image=self.pixel)
@@ -137,6 +138,8 @@ class Cell:
             Cell.flagCount -= 1
             if self.isMine:
                 Cell.correctlyGuessedCount -= 1
+            Cell.cellCountLabelObj.configure(text=f'Ilość flag\n{str(self.mineCount + Cell.mineCount-Cell.flagCount)}')
+
 
         self.checkIfWon()
 
