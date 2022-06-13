@@ -30,8 +30,13 @@ class Timer:
     def countTime(self):
         while self.timerOn:
             sleep(1)
-            self.currTime += 1
-            self.timerText.set(f"TIME: {self.currTime:03d}")
+            try:
+                if not self.timerOn:
+                    break
+                self.currTime += 1
+                self.timerText.set(f"TIME: {self.currTime:03d}")
+            except:
+                return
 
     def startTimer(self):
         self.timerOn = True

@@ -117,8 +117,9 @@ class Cell:
         for c in self.cells:
             if c.isMine:
                 c.cellButtonObject.configure(image=self.bombImage)
-        messagebox.showinfo("Przegrana", "Przegrana!")
+
         self.cellTimer.stopTimer()
+        messagebox.showinfo("Przegrana", "Przegrana!")
         sys.exit()
 
     def rightClickAction(self, event):
