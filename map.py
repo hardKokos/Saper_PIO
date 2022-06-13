@@ -1,5 +1,8 @@
+import sys
 import tkinter
 from tkinter import *
+from tkinter import messagebox
+
 import constants
 import tools
 import userInput
@@ -39,6 +42,9 @@ class Map:
     settings.mainloop()
     userInput.MINES_NUMBER = int(minesNumber.get())
     userInput.GRID_SIZE = int(mapSize.get())
+    if (userInput.MINES_NUMBER > userInput.GRID_SIZE ** 2) or (userInput.GRID_SIZE < 8) or (userInput.GRID_SIZE > 22):
+        messagebox.showinfo('Error', 'Złe wymiary mapy lub za duża ilość min!!!')
+        sys.exit(0)
     CELLS = userInput.GRID_SIZE
     settings.destroy()
 
