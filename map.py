@@ -16,8 +16,11 @@ class Map:
     settings.configure(bg="gray")
     settings.title("Ustawienia")
     settings.resizable(False, False)
-    settings.geometry("400x200")
-
+    center_width = settings.winfo_screenwidth()
+    center_height = settings.winfo_screenheight()
+    center_x = int(center_width / 2 - constants.SETTINGS_WIDTH / 2)
+    center_y = int(center_height / 2 - constants.SETTINGS_HEIGHT / 2)
+    settings.geometry(f'{constants.SETTINGS_WIDTH}x{constants.SETTINGS_HEIGHT}+{center_x}+{center_y}')
     btn = Button(settings, text="Zatwierdź", width=15, bd=2, command=settings.quit)
     btn.place(relx=0.5, rely=0.6, anchor=CENTER)
 
