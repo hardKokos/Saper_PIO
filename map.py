@@ -1,3 +1,4 @@
+import os
 import sys
 import tkinter
 from tkinter import *
@@ -33,7 +34,7 @@ class Map:
     minesNumber = Entry(settings, width=25, bd=3)
     minesNumber.place(relx=0.5, rely=0.2, anchor=CENTER)
 
-    mapLabel = Label(settings, height=1, width=30, bd=0, bg='gray', text="Podaj rozmiar mapy (min 8, max 22)")
+    mapLabel = Label(settings, height=1, width=30, bd=0, bg='gray', text="Podaj rozmiar mapy (min 8, max 16)")
     mapLabel.place(relx=0.5, rely=0.3, anchor=CENTER)
 
     minesLabel = Label(settings, height=1, width=25, bd=0, bg='gray', text="Podaj ilosc min")
@@ -42,9 +43,10 @@ class Map:
     settings.mainloop()
     userInput.MINES_NUMBER = int(minesNumber.get())
     userInput.GRID_SIZE = int(mapSize.get())
-    if (userInput.MINES_NUMBER > userInput.GRID_SIZE ** 2) or (userInput.GRID_SIZE < 8) or (userInput.GRID_SIZE > 22):
+    if (userInput.MINES_NUMBER > userInput.GRID_SIZE ** 2) or (userInput.GRID_SIZE < 8) or (userInput.GRID_SIZE > 16):
         messagebox.showinfo('Error', 'Złe wymiary mapy lub za duża ilość min!!!')
-        sys.exit(0)
+        settings.destroy()
+        os.system('python map.py')
     CELLS = userInput.GRID_SIZE
     settings.destroy()
 
